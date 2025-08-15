@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Granite Design</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+  table { margin: 0 auto; border-collapse: collapse; width: 98%; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  th { background: #01578d; color: white; }
+  input, textarea { padding: 6px; width: 95%; }
+  .btn { padding: 6px 12px; border: 0; cursor: pointer; border-radius: 4px; }
+  .btn-edit { background: #2980b9; color: white; }
+  .btn-save { background: #27ae60; color: white; }
+  .btn-cancel { background: #c0392b; color: white; }
+  .btn-del { background: #c0392b; color: white; }
+  #msg { margin-top: 10px; }
+</style>
+</head>
+<body>
+  <center><br>
+    <img src="img/Emnas Tech.png" alt="" width="120">
+    <h1 style="color: rgb(1, 85, 141);">EMNAS TECHNOLOGIES</h1>
+    <h2>GRANITE DESIGN – WORK REPORT</h2>
+  </center>
+  <h2>Admin Dashboard - All Reports</h2>
+
+  <div style="margin-bottom:10px;">
+    From: <input type="date" id="fromDate">
+    To: <input type="date" id="toDate">
+    <button class="btn" onclick="applyFilter()">Filter</button>
+    <button class="btn" onclick="clearFilter()">Clear</button>
+  </div>
+
+  <div id="msg"></div>
+  <table id="adminTable"></table>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbxmzxIDOvgl1YtLZ1i26JLPpItzC5OHurUPyMCGtLQRn7nyRZAeElP0m6hWGCO5QnHt/exec';
+
+// require admin role
+const role = localStorage.getItem('gd_role');
+if (role !== 'admin') {
+  alert('Access denied. Admins only.');
+  location.href = 'Login.html';
+}
+
+let allReportsData = [];
+let header = [];
+let editingRowIndex = null;
+
+async function loadAllReports() {
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    const msg = document.getElementById('msg');
+    if (!data.ok) {
+      msg.style.color = 'red';
+      msg.innerText = data.error || 'Error loading';
+      return;
+    }
+    header = data.header;
+    allReportsData = data.reports;
+    renderTable(allReportsData);
+  } catch (err) {
+    document.getElementById('msg').innerText = err.toString();
+  }
+}
+
+function applyFilter() {
+  const from = document.getElementById('fromDate').value;
+  const to = document.getElementById('toDate').value;
+  const filtered = allReportsData.filter(r => {
+    const d = r.row[1];
+    if (!d) return false;
+    if (from && d < from) return false;
+    if (to && d > to) return false;
+    return true;
+  });
+  renderTable(filtered);
+}
+
+function clearFilter() {
+  document.getElementById('fromDate').value = '';
+  document.getElementById('toDate').value = '';
+  renderTable(allReportsData);
+}
+
+function renderTable(dataSet) {
+  const table = document.getElementById('adminTable');
+  if (!dataSet.length) {
+    table.innerHTML = '<tr><td>No reports found</td></tr>';
+    return;
+  }
+  let html = '<tr>' + header.map(h => `<th>${h}</th>`).join('') + '<th>Actions</th></tr>';
+  dataSet.forEach(r => {
+    if (editingRowIndex === r.rowIndex) {
+      html += '<tr>' + r.row.map((cell, i) =>
+        `<td><input type="text" id="edit_${i}" value="${(cell || '').toString().replace(/"/g,'&quot;')}"></td>`
+      ).join('') +
+      `<td>
+         <button class="btn btn-save" onclick="saveRow(${r.rowIndex})">Save</button>
+         <button class="btn btn-cancel" onclick="cancelEdit()">Cancel</button>
+       </td>
+      </tr>`;
+    } else {
+      html += '<tr>' + r.row.map((c, i) => `<td>${i===1 ? (formatDateForDisplay(c)) : (c || '')}</td>`).join('') +
+      `<td>
+        <button class="btn btn-edit" onclick="editRow(${r.rowIndex})">Edit</button>
+        <button class="btn btn-del" onclick="deleteRow(${r.rowIndex})">Delete</button>
+      </td></tr>`;
+    }
+  });
+  table.innerHTML = html;
+}
+
+function formatDateForDisplay(val) {
+  if (!val) return '';
+  if (typeof val === 'string' && val.includes('T')) return val.split('T')[0];
+  return val;
+}
+
+function editRow(rowIndex) {
+  editingRowIndex = rowIndex;
+  renderTable(allReportsData);
+}
+
+function cancelEdit() {
+  editingRowIndex = null;
+  renderTable(allReportsData);
+}
+
+async function saveRow(rowIndex) {
+  const inputs = [];
+  for (let i = 0; i < header.length; i++) {
+    inputs.push(document.getElementById(`edit_${i}`).value);
+  }
+
+  const payload = {
+    action: 'save',
+    username: inputs[0],
+    date: inputs[1],
+    noOfFiles: inputs[2],
+    totalSqft: inputs[3],
+    dxf: inputs[4],
+    dwg: inputs[5],
+    lotFileNumber: inputs[6],
+    lotSqft: inputs[7],
+    lotTemplate: inputs[8],
+    lotUnits: inputs[9],
+    notes: inputs[10],
+    editRow: rowIndex
+  };
+
+  try {
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
+    const data = await res.json();
+    const msg = document.getElementById('msg');
+    msg.style.color = data.ok ? 'green' : 'red';
+    msg.innerText = data.message || data.error;
+    if (data.ok) {
+      editingRowIndex = null;
+      loadAllReports();
+    }
+  } catch (err) {
+    document.getElementById('msg').innerText = err.toString();
+  }
+}
+
+async function deleteRow(rowIndex) {
+  if (!confirm('Delete this row?')) return;
+  const payload = { action: 'delete', rowIndex };
+  try {
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
+    const data = await res.json();
+    const msg = document.getElementById('msg');
+    msg.style.color = data.ok ? 'green' : 'red';
+    msg.innerText = data.message || data.error;
+    if (data.ok) loadAllReports();
+  } catch (err) {
+    document.getElementById('msg').innerText = err.toString();
+  }
+}
+
+loadAllReports();
+</script>
+</body>
+</html>
