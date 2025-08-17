@@ -17,14 +17,18 @@
 <body>
   <nav class="navbar">
   <div class="logo">EMNAS TECH</div>
-  <ul class="nav-links">
+
+  <button id="darkToggle" class="btn small">🌙</button>
+
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+  <ul class="nav-links" id="navLinks">
     <li><a href="Index.html">Home</a></li>
     <li><a href="Signup.html">Signup</a></li>
     <li><a href="Login.html">Login</a></li>
     <li><a href="DataEntry.html">Work Report</a></li>
     <li><a href="Admin.html">Admin</a></li>
   </ul>
-  <button id="darkToggle" class="btn small">🌙</button>
 </nav>
   <header class="center">
     <img src="img/Emnas Tech.png" alt="Emnas Tech Logo" width="120" />
@@ -58,6 +62,12 @@ const toggle = document.getElementById('darkToggle');
   toggle.addEventListener('click', () => {
     document.body.classList.toggle('dark');
   });
+
+   function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('show');
+  }
+
 </script>
 </body>
 </html>

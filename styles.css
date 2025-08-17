@@ -64,7 +64,7 @@ header h2 {
 
 /* Accent and Danger Variants */
 .btn.accent {
-  background: linear-gradient(to bottom, #43e97b, #38f9d7);
+  background: linear-gradient(to bottom, #00f2fe, #4facfe);
 }
 .btn.accent:hover {
   background: linear-gradient(to bottom, #38f9d7, #43e97b);
@@ -75,7 +75,12 @@ header h2 {
 .btn.danger:hover {
   background: linear-gradient(to bottom, #ff4e50, #ff6a6a);
 }
-
+.btn.btn-del{
+  background: linear-gradient(to bottom, #ff6a6a, #ff4e50);
+}
+.btn.btn-del:hover{
+  background: linear-gradient(to bottom, #ff4e50, #ff6a6a);
+}
 /* Form Inputs */
 input, textarea {
   width: 100%;
@@ -132,39 +137,81 @@ th {
     font-size: 0.9rem;
   }
 }
-/* Navigation Bar */
+/* Base navbar styles */
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to right, #0077b6, #00b4d8);
+  justify-content: space-between;
+  background-color: #222;
   padding: 10px 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  position: relative;
   color: white;
 }
+
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.5em;
   font-weight: bold;
 }
+
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
 }
+
 .nav-links li a {
   color: white;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
+  padding: 8px 12px;
+  transition: background 0.3s;
 }
+
 .nav-links li a:hover {
-  color: #ffd166;
+  background-color: #555;
+  border-radius: 4px;
 }
-.btn.small {
-  padding: 6px 12px;
-  font-size: 0.9rem;
-  border-radius: 20px;
+
+/* Dark mode button */
+#darkToggle {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  font-size: 1.8em;
+  cursor: pointer;
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #222;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 200px;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
 }
 
 /* Button Animation */
@@ -228,9 +275,9 @@ table {
   justify-self: center;
 }
   #myReportsTable {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
-  min-width: 600px;
+  min-width: 800px;
 }
 th, td {
   padding: 10px;
