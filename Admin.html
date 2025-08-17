@@ -58,6 +58,7 @@
   <table id="adminTable">
     <!-- Table content will be dynamically inserted -->
   </table>
+  <button class="btn accent" onclick="exportTableToExcel('adminTable', 'AdminReports')">Export to Excel</button>
 </div>
   </main>
 
@@ -219,6 +220,27 @@ loadAllReports();
  function toggleMenu() {
     const navLinks = document.getElementById('navLinks');
     navLinks.classList.toggle('show');
+  }
+
+  function exportTableToExcel(tableID, filename = '') {
+    const table = document.getElementById(tableID);
+    const rows = Array.from(table.rows);
+    let csvContent = '';
+
+    rows.forEach(row => {
+      const cols = Array.from(row.cells);
+      const rowData = cols.map(cell => `"${cell.innerText}"`).join(',');
+      csvContent += rowData + '\n';
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename + '.csv';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 </script>
 </body>

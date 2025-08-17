@@ -296,3 +296,9 @@ th {
     font-size: 0.9rem;
   }
 }
+.btn.accent {
+  background: linear-gradient(to bottom, #43e97b, #38f9d7);
+}
+.btn.accent:hover {
+  background: linear-gradient(to bottom, #38f9d7, #43e97b);
+}
