@@ -1,0 +1,251 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  color: #333;
+  padding: 20px;
+  line-height: 1.6;
+  justify-content: center;
+}
+
+/* Centered Header */
+header.center {
+  text-align: center;
+  margin-bottom: 30px;
+}
+header img {
+  margin-bottom: 10px;
+}
+header h1 {
+  color: rgb(1, 85, 141);
+  font-size: 2rem;
+}
+header h2 {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Button Group Layout */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Glossy Button Styles */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(to bottom, #4facfe, #00f2fe);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.btn:hover {
+  background: linear-gradient(to bottom, #00f2fe, #4facfe);
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Accent and Danger Variants */
+.btn.accent {
+  background: linear-gradient(to bottom, #43e97b, #38f9d7);
+}
+.btn.accent:hover {
+  background: linear-gradient(to bottom, #38f9d7, #43e97b);
+}
+.btn.danger {
+  background: linear-gradient(to bottom, #ff6a6a, #ff4e50);
+}
+.btn.danger:hover {
+  background: linear-gradient(to bottom, #ff4e50, #ff6a6a);
+}
+
+/* Form Inputs */
+input, textarea {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  margin: 10px auto;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+th {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Messages */
+.msg {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+  input, textarea {
+    max-width: 90%;
+  }
+  table, td, th {
+    font-size: 0.9rem;
+  }
+}
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #0077b6, #00b4d8);
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: white;
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.nav-links li a:hover {
+  color: #ffd166;
+}
+.btn.small {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+}
+
+/* Button Animation */
+.btn {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* Dark Mode */
+body.dark {
+  background: #121212;
+  color: #eee;
+}
+body.dark header h1,
+body.dark header h2,
+body.dark .logo,
+body.dark .nav-links li a {
+  color: #fff;
+}
+body.dark .navbar {
+  background: linear-gradient(to right, #333, #555);
+}
+body.dark input,
+body.dark textarea {
+  background: #1e1e1e;
+  color: #fff;
+  border: 1px solid #444;
+}
+body.dark .btn {
+  background: linear-gradient(to bottom, #555, #333);
+}
+body.dark .btn:hover {
+  background: linear-gradient(to bottom, #333, #555);
+}
+/* Responsive Table Container */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+   justify-self: center;
+}
+#reportForm {
+  width: 40%;
+  border-collapse: collapse;
+  min-width: 600px;
+  justify-self: center;
+}
+  #myReportsTable {
+  width: 80%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  justify-self: center;
+}
+th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Responsive Font Size */
+@media (max-width: 768px) {
+  table, th, td {
+    font-size: 0.9rem;
+  }
+}
