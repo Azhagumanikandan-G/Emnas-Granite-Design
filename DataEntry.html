@@ -40,21 +40,63 @@
     <div id="userInfo">Logged in as: <strong id="usernameTxt"></strong></div>
 
     <form id="reportForm" onsubmit="return false;">
-      <table style="justify-content: center;">
-        <tr><td>Date:</td><td><input type="date" id="date" /></td></tr>
-        <tr><td>No. of files:</td><td><input type="number" id="noOfFiles" /></td></tr>
-        <tr><td>Total sqft:</td><td><input type="text" id="totalSqft" /></td></tr>
-        <tr><td>DXF:</td><td><input type="text" id="dxf" /></td></tr>
-        <tr><td>DWG:</td><td><input type="text" id="dwg" /></td></tr>
-        <tr><td>Lot file number:</td><td><input type="text" id="lotFileNumber" /></td></tr>
-        <tr><td>Lot sqft:</td><td><input type="text" id="lotSqft" /></td></tr>
-        <tr><td>Lot template:</td><td><input type="text" id="lotTemplate" /></td></tr>
-        <tr><td>Lot units:</td><td><input type="text" id="lotUnits" /></td></tr>
-        <tr><td>Notes:</td><td><textarea id="notes"></textarea></td></tr>
-        <tr><td></td><td><button class="btn" id="submitBtn">Save</button></td></tr>
-      </table>
-    </form>
+  <table class="form-table">
+    <tr>
+      <td><label for="date">Date:</label></td>
+      <td><input type="date" id="date" /></td>
+    </tr>
 
+    <tr>
+      <td><label for="noOfFiles">No. of files:</label></td>
+      <td><input type="number" id="noOfFiles" /></td>
+    </tr>
+
+    <tr>
+      <td><label for="totalSqft">Total sqft:</label></td>
+      <td><input type="text" id="totalSqft" /></td>
+    </tr>
+
+    <tr>
+      <td><label for="dxf">DXF:</label></td>
+      <td><input type="text" id="dxf" /></td>
+    </tr>
+
+    <tr>
+      <td><label for="dwg">DWG:</label></td>
+      <td><input type="text" id="dwg" /></td>
+    </tr>
+
+    <tr>
+      <td><label for="lotFileNumber">Lot file number:</label></td>
+      <td><input type="text" id="lotFileNumber" /></td>
+    </tr>
+
+    <tr>
+      <td><label for="lotSqft">Lot sqft:</label></td>
+      <td><input type="text" id="lotSqft" /></td>
+    </tr>
+
+    <tr>
+      <td><label for="lotTemplate">Lot template:</label></td>
+      <td><input type="text" id="lotTemplate" /></td>
+    </tr>
+
+    <tr>
+      <td><label for="lotUnits">Lot units:</label></td>
+      <td><input type="text" id="lotUnits" /></td>
+    </tr>
+
+    <tr>
+      <td><label for="notes">Notes:</label></td>
+      <td><textarea id="notes"></textarea></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td><button class="btn accent" id="submitBtn">Save</button></td>
+    </tr>
+  </table>
+</form>
     <div class="msg" id="msg"></div>
 
     <h3>My Reports</h3>
